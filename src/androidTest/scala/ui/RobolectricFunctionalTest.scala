@@ -9,7 +9,6 @@ import org.scalatest.junit.JUnitSuite
  * Before you can run it in Eclipse as an ordinary JUnit test, you should
  * perform the steps outlined in the documentation.
  *
- * @author laufer
  * @see http://pivotal.github.com/robolectric
  */
 @RunWith(classOf[RobolectricTestRunner])

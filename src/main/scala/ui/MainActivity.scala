@@ -28,6 +28,7 @@ class MainActivity extends Activity with TypedActivity {
     setContentView(R.layout.main)
     // instantiate the adapter actor, which will instantiate the counter model
     val system = ActorSystem("clickcounter")
+    // FIXME cannot get this to work without explicit instantiation
     adapter = system.actorOf(Props(new AdapterActor(this)))
   }
 
