@@ -34,6 +34,7 @@ class BoundedCounterActor(val min: Int, val max: Int) extends Actor {
   private var value: Int = min
 
   override def receive = {
+    // the data invariant is encoded in the various conditionals
     case Increment =>
       if (value < max) value += 1
       sender ! value

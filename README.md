@@ -1,11 +1,13 @@
-[![Build Status](https://travis-ci.org/LoyolaChicagoCode/clickcounter-android-rxscala.svg?branch=master)](https://travis-ci.org/LoyolaChicagoCode/clickcounter-android-rxscala) 
-[![Coverage Status](https://img.shields.io/coveralls/LoyolaChicagoCode/clickcounter-android-rxscala.svg)](https://coveralls.io/r/LoyolaChicagoCode/clickcounter-android-rxscala) 
-[![Download](https://api.bintray.com/packages/loyolachicagocode/generic/clickcounter-android-rxscala/images/download.svg) ](https://bintray.com/loyolachicagocode/generic/clickcounter-android-rxscala/_latestVersion)
+[![Build Status](https://travis-ci.org/LoyolaChicagoCode/clickcounter-android-akka.svg?branch=master)](https://travis-ci.org/LoyolaChicagoCode/clickcounter-android-akka)
+[![Coverage Status](https://img.shields.io/coveralls/LoyolaChicagoCode/clickcounter-android-akka.svg)](https://coveralls.io/r/LoyolaChicagoCode/clickcounter-android-akka)
+[![Download](https://api.bintray.com/packages/loyolachicagocode/generic/clickcounter-android-akka/images/download.svg) ](https://bintray.com/loyolachicagocode/generic/clickcounter-android-akka/_latestVersion)
 
 # Learning Objectives
 
 This example is intended as a starting point for anyone planning develop
-*reactive* Android applications using Scala. Its learning objectives are:
+*actor-based* Android applications using Scala and
+[Akka](http://doc.akka.io/docs/akka/snapshot/scala/actors.html).
+Its learning objectives are:
 
 - Android application development using Scala
     - using the Simple Build Tool (sbt) for Scala in conjunction with 
@@ -15,7 +17,8 @@ This example is intended as a starting point for anyone planning develop
     - [Dependency Inversion Principle (DIP)](http://en.wikipedia.org/wiki/Dependency_inversion_principle)
     - [Model-View-Adapter](http://en.wikipedia.org/wiki/Model-view-adapter) architectural pattern
     - Separation of Android activity into event-handling and lifecycle management
-    - Separation of stateful and reactive components using [RxScala](http://rxscala.github.io)
+    - Separation of concerns among components using
+      [Akka actors](http://doc.akka.io/docs/akka/snapshot/scala/actors.html)
 - Effective testing
     - Unit testing and [Behavior-Driven Development (BDD)](http://en.wikipedia.org/wiki/Behavior-driven_development) 
       with ScalaTest
