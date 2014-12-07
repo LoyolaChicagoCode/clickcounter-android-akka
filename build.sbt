@@ -27,9 +27,7 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % "4.11" % "test",
   "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % "test",
   "org.scalatest" %% "scalatest" % "2.2.1" % "test",
-  "com.netflix.rxjava" % "rxjava-core" % "0.20.7",
-  "com.netflix.rxjava" % "rxjava-scala" % "0.20.7",
-  "com.netflix.rxjava" % "rxjava-android" % "0.20.7"
+  "com.typesafe.akka" %% "akka-actor" % "2.3.7"
 )
 
 val androidJars = (platformJars in Android, baseDirectory) map {
@@ -46,8 +44,28 @@ exportJars in Test := false
 
 // Supress warnings so that Proguard will do its job.
 proguardOptions in Android ++= Seq(
-  "-dontwarn rx.internal.util.**",
-  "-dontwarn android.test.**"
+  "-dontwarn android.test.**",
+  "-dontwarn sun.misc.Unsafe"
+)
+
+// Proguard rules for Akka
+proguardOptions in Android ++= Seq(
+  "-keep class akka.actor.Actor$class { *; }",
+  "-keep class akka.actor.LightArrayRevolverScheduler { *; }",
+  "-keep class akka.actor.LocalActorRefProvider { *; }",
+  "-keep class akka.actor.CreatorFunctionConsumer { *; }",
+  "-keep class akka.actor.TypedCreatorFunctionConsumer { *; }",
+  "-keep class akka.dispatch.BoundedDequeBasedMessageQueueSemantics { *; }",
+  "-keep class akka.dispatch.UnboundedMessageQueueSemantics { *; }",
+  "-keep class akka.dispatch.UnboundedDequeBasedMessageQueueSemantics { *; }",
+  "-keep class akka.dispatch.DequeBasedMessageQueueSemantics { *; }",
+  "-keep class akka.dispatch.MultipleConsumerSemantics { *; }",
+  "-keep class akka.actor.LocalActorRefProvider$Guardian { *; }",
+  "-keep class akka.actor.LocalActorRefProvider$SystemGuardian { *; }",
+  "-keep class akka.dispatch.UnboundedMailbox { *; }",
+  "-keep class akka.actor.DefaultSupervisorStrategy { *; }",
+  "-keep class macroid.akkafragments.AkkaAndroidLogger { *; }",
+  "-keep class akka.event.Logging$LogExt { *; }"
 )
 
 // Required so Proguard won't remove the actual instrumentation tests.

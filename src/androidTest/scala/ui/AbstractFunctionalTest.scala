@@ -1,4 +1,4 @@
-package edu.luc.etl.cs313.scala.rxclickcounter.ui
+package edu.luc.etl.cs313.scala.akkaclickcounter.ui
 
 import org.junit.Assert._
 import org.junit.Test
