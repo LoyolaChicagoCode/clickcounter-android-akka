@@ -10,7 +10,7 @@ android.Plugin.androidBuild
 
 organization := "lucoodevcourse"
 
-name := "clickcounter-android-rxscala"
+name := "clickcounter-android-akka"
 
 version := "0.2"
 

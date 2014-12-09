@@ -1,8 +1,7 @@
 package edu.luc.etl.cs313.scala.akkaclickcounter
 package ui
 
-import akka.actor.{Props, Actor}
-import model.BoundedCounterActor
+import akka.actor.{ActorRef, Actor}
 import model.BoundedCounterActor._
 
 /**
@@ -10,11 +9,11 @@ import model.BoundedCounterActor._
  * keeps the view updated. To this end, it maps semantic update messages
  * to actual view changes visible to the user. It also forwards user input
  * messages to the counter model.
+ *
+ * @param activity the main activity containing the views to access
+ * @param counter the actor serving as the counter model
  */
-class AdapterActor(activity: MainActivity) extends Actor {
-
-  /** Child actor for the counter model. */
-  val counter = context.actorOf(Props(classOf[BoundedCounterActor], 0, 5))
+class AdapterActor(activity: MainActivity, counter: ActorRef) extends Actor {
 
   override def receive = {
     case value: Int => ui {

@@ -7,7 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 
-import model.BoundedCounterActor._
+import model.BoundedCounterActor
+import BoundedCounterActor._
 
 /**
  * The main Android activity, which provides the required lifecycle methods.
@@ -17,7 +18,7 @@ import model.BoundedCounterActor._
  */
 class MainActivity extends Activity with TypedActivity {
 
-  private def TAG = "clickcounter-android-activity"
+  private def TAG = "clickcounter-android-akka"
 
   var adapter: ActorRef = _
 
@@ -28,8 +29,9 @@ class MainActivity extends Activity with TypedActivity {
     setContentView(R.layout.main)
     // instantiate the adapter actor, which will instantiate the counter model
     val system = ActorSystem("clickcounter")
-    // FIXME cannot get this to work without explicit instantiation
-    adapter = system.actorOf(Props(new AdapterActor(this)))
+    // FIXME cannot get this to work without explicit instantiation of the actor
+    adapter = system.actorOf(Props(
+      new AdapterActor(this, system.actorOf(Props(classOf[BoundedCounterActor], 0, 5)))))
   }
 
   override def onStart() = {
