@@ -37,15 +37,12 @@ class BoundedCounterActor(val min: Int, val max: Int) extends Actor {
     // the data invariant is encoded in the various conditionals
     case Increment =>
       if (value < max) value += 1
-      sender ! value
-      sender ! (if (value == max) Full else Counting)
+      sender ! (value, if (value == max) Full else Counting)
     case Decrement =>
       if (value > min) value -= 1
-      sender ! value
-      sender ! (if (value == min) Empty else Counting)
+      sender ! (value, if (value == min) Empty else Counting)
     case Reset =>
       value = min
-      sender ! value
-      sender ! Empty
+      sender ! (value, Empty)
   }
 }

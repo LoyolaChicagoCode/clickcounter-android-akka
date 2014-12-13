@@ -1,6 +1,9 @@
 package edu.luc.etl.cs313.scala.akkaclickcounter
 package ui
 
+import scala.concurrent.duration._
+import akka.util.Timeout
+import akka.pattern.ask
 import akka.actor.{ActorRef, Actor}
 import model.BoundedCounterActor._
 
@@ -15,23 +18,29 @@ import model.BoundedCounterActor._
  */
 class AdapterActor(activity: MainActivity, counter: ActorRef) extends Actor {
 
+  implicit val timeout: Timeout = 100.milliseconds // for the actor 'asks'
+  import context.dispatcher // ExecutionContext for the futures and scheduler
+
   override def receive = {
-    case value: Int => ui {
-      activity.findView(TR.textview_value).setText(value.toString)
+    case message => counter ? message onSuccess {
+      case (value: Int, state) => ui {
+        activity.findView(TR.textview_value).setText(value.toString)
+        state match {
+          case Empty => ui {
+            activity.findView(TR.button_increment).setEnabled(true)
+            activity.findView(TR.button_decrement).setEnabled(false)
+          }
+          case Counting => ui {
+            activity.findView(TR.button_increment).setEnabled(true)
+            activity.findView(TR.button_decrement).setEnabled(true)
+          }
+          case Full => ui {
+            activity.findView(TR.button_increment).setEnabled(false)
+            activity.findView(TR.button_decrement).setEnabled(true)
+          }
+        }
+      }
     }
-    case Empty => ui {
-      activity.findView(TR.button_increment).setEnabled(true)
-      activity.findView(TR.button_decrement).setEnabled(false)
-    }
-    case Counting => ui {
-      activity.findView(TR.button_increment).setEnabled(true)
-      activity.findView(TR.button_decrement).setEnabled(true)
-    }
-    case Full => ui {
-      activity.findView(TR.button_increment).setEnabled(false)
-      activity.findView(TR.button_decrement).setEnabled(true)
-    }
-    case other => counter ! other
   }
 
   def ui(task: => Unit) =
